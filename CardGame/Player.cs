@@ -16,14 +16,37 @@ namespace CardGame
         {
             for (int i = 0; i < 10; i++)
             {
-                CardsInHand.Add(new Card() { Name = i.ToString() });
+                CardsInHand.Add(new Card() { Name = i.ToString(), AttackValue = 10, Type = CardType.Attack });
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                ActiveCards.Add(new EmptyCard());
             }
         }
 
         public string Name { get; }
-        public int Life { get; }
+        public int Life { get; private set; } = 100;
 
-        public ICollection<Card> CardsInHand { get; } = new List<Card>();
-        public ICollection<Card> ActiveCards { get; } = new List<Card>();
+        public IList<Card> CardsInHand { get; } = new List<Card>();
+        public IList<Card> ActiveCards { get; } = new List<Card>();
+
+        public void ApplyCard(Card card)
+        {
+            if (card.Type == CardType.Attack)
+            {
+                Life -= card.AttackValue;
+            }
+            else
+            {
+                Life += card.AttackValue;
+            }
+        }
+
+        internal void ChangeCard(int cardNumber, int placeNumber)
+        {
+            Card card = CardsInHand[cardNumber];
+            ActiveCards[placeNumber] = card;
+            CardsInHand.Remove(card);
+        }
     }
 }

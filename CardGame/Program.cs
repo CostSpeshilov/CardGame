@@ -12,15 +12,53 @@ namespace CardGame
             Player player2 = new Player("Второй игрок");
             Game = new Game(player1, player2);
 
-            ShowPlayerCards(player1);
+            Game.StartGameProcess();
 
-            for (int i = 0; i < 4; i++)
+            while (!Game.GameOver)
             {
-                player1.ActiveCards.Add(new EmptyCard()); 
-            }
-            player1.ActiveCards.Add(new Card() { Name = "10" });
+                DisplayBoard(player1, player2);
+                Console.WriteLine($"Ходит игрок {Game.CurrentPlayer.Name}, {Game.CurrentPlayer.Life}");
 
-            Console.WriteLine($"Разыгранные карты: {player1}");
+                Console.WriteLine("Введите номер карты, которой хотите походить");
+                if (int.TryParse(Console.ReadLine(), out int cardNumber))
+                {
+                    Console.WriteLine("Введите номер места, на которое хотите походить");
+                    if (int.TryParse(Console.ReadLine(), out int placeNumber))
+                    {
+                        Game.MakeMove(cardNumber, placeNumber);
+                    }
+                }
+            }
+            
+        }
+
+        private static void DisplayBoard(Player player1, Player player2)
+        {
+            ShowPlayerCards(player1);
+            Console.WriteLine();
+
+            ShowActiveCardsWithNullObjects(player1);
+
+            Console.WriteLine();
+
+            ShowActiveCardsWithNullObjects(player2);
+
+            Console.WriteLine();
+
+            ShowPlayerCards(player2);
+        }
+
+        private static void ShowActiveCardsWithNullObjects(Player player1)
+        {
+            foreach (var card in player1.ActiveCards)
+            {
+                Console.Write(card.Name);
+                Console.Write("\t");
+            }
+        }
+
+        private static void ShowActiveCardsWithoutNullObjects(Player player1)
+        {
             foreach (var card in player1.ActiveCards)
             {
                 Console.Write(card.Name);
@@ -31,10 +69,6 @@ namespace CardGame
             //    Console.Write("ПК");
             //    Console.Write("\t");
             //}
-            Console.WriteLine();
-            Console.WriteLine();
-
-            ShowPlayerCards(player2);
         }
 
         private static void ShowPlayerCards(Player player)
