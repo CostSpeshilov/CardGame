@@ -17,7 +17,7 @@ namespace CardGame
         {
             Console.WriteLine(message);
         }
-        public void DisplayBoard(Player player1, Player player2)
+        public void DisplayBoard(IPlayer player1, IPlayer player2)
         {
             ShowPlayerCards(player1);
             Console.WriteLine();
@@ -32,7 +32,7 @@ namespace CardGame
 
             ShowPlayerCards(player2);
         }
-        private void ShowActiveCardsWithNullObjects(Player player1)
+        private void ShowActiveCardsWithNullObjects(IPlayer player1)
         {
             foreach (var card in player1.ActiveCards)
             {
@@ -40,7 +40,7 @@ namespace CardGame
                 Console.Write("\t");
             }
         }
-        private void ShowPlayerCards(Player player)
+        private void ShowPlayerCards(IPlayer player)
         {
             Console.WriteLine($"Карты игрока : {player.Name}");
             foreach (var card in player.CardsInHand)

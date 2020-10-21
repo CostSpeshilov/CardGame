@@ -9,6 +9,6 @@ namespace GameLogic
     {
         void WriteLine(string message);
         string ReadLine();
-        void DisplayBoard(Player player1, Player player2);
+        void DisplayBoard(IPlayer player1, IPlayer player2);
     }
 }

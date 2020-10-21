@@ -4,8 +4,12 @@ using System.Text;
 
 namespace CardGame.GameLogic
 {
-    public class Player
+    public class Player : IPlayer
     {
+        public Player()
+        {
+
+        }
         public Player(string name)
         {
             Name = name;
@@ -42,7 +46,7 @@ namespace CardGame.GameLogic
             }
         }
 
-        internal void ChangeCard(int cardNumber, int placeNumber)
+        public void ChangeCard(int cardNumber, int placeNumber)
         {
             Card card = CardsInHand[cardNumber];
             ActiveCards[placeNumber] = card;

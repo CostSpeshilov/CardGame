@@ -11,15 +11,15 @@ namespace CardGame.GameLogic
     /// </summary>
     public class Game
     {
-        IDisplay display;
+        readonly IDisplay display;
         public Game(IDisplay display)
         {
-            this.display = display;
+            this.display = display ?? throw new ArgumentNullException(nameof(display));
             field = new Field();
         }
 
-        public Player Player1 { get; set; }
-        public Player Player2 { get; set; }
+        public virtual IPlayer Player1 { get; private set; }
+        public IPlayer Player2 { get; private set; }
 
         public bool GameOver
         {
@@ -29,15 +29,15 @@ namespace CardGame.GameLogic
             }
         }
 
-        public Player CurrentPlayer { get; private set; }
+        public IPlayer CurrentPlayer { get; private set; }
 
         private readonly Field field;
-        Field Field => field;
+        internal Field Field => field;
 
         public void StartGameProcess()
         {
-            Player player1 = new Player("Первый игрок");
-            Player player2 = new Player("Второй игрок");
+            IPlayer Player1 = new Player("Первый игрок");
+            Player Player2 = new Player("Второй игрок");
 
             CurrentPlayer = Player1;
 
@@ -71,7 +71,7 @@ namespace CardGame.GameLogic
                 type = CardType.Defence;
             }
             var attVal = random.Next(0, 10);
-            Card newCard = new Card() { Type = type, AttackValue = attVal, Name = $"{type}:{attVal}"};
+            Card newCard = new Card() { Type = type, AttackValue = attVal, Name = $"{type}:{attVal}" };
 
             CurrentPlayer.CardsInHand.Add(newCard);
         }
@@ -95,7 +95,7 @@ namespace CardGame.GameLogic
             ApplyCardsToPlayer(Player2, Player1);
         }
 
-        private void ApplyCardsToPlayer(Player first, Player second)
+        private void ApplyCardsToPlayer(IPlayer first, IPlayer second)
         {
             foreach (var card in first.ActiveCards.Where(x => x.Type == CardType.Attack))
             {
