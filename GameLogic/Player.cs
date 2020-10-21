@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CardGame
+namespace CardGame.GameLogic
 {
-    class Player
+    public class Player
     {
         public Player(string name)
         {

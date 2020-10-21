@@ -1,19 +1,20 @@
-﻿using System;
+﻿using GameLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CardGame
+namespace CardGame.GameLogic
 {
     /// <summary>
     /// Представляет собой одну партию в игре
     /// </summary>
-    class Game
+    public class Game
     {
-        public Game(Player player1, Player player2)
+        IDisplay display;
+        public Game(IDisplay display)
         {
-            Player1 = player1;
-            Player2 = player2;
+            this.display = display;
             field = new Field();
         }
 
@@ -31,11 +32,30 @@ namespace CardGame
         public Player CurrentPlayer { get; private set; }
 
         private readonly Field field;
-        public Field Field => field;
+        Field Field => field;
 
         public void StartGameProcess()
         {
+            Player player1 = new Player("Первый игрок");
+            Player player2 = new Player("Второй игрок");
+
             CurrentPlayer = Player1;
+
+            while (!GameOver)
+            {
+                display.DisplayBoard(Player1, Player2);
+                display.WriteLine($"Ходит игрок {CurrentPlayer.Name}, {CurrentPlayer.Life}");
+
+                display.WriteLine("Введите номер карты, которой хотите походить");
+                if (int.TryParse(display.ReadLine(), out int cardNumber))
+                {
+                    display.WriteLine("Введите номер места, на которое хотите походить");
+                    if (int.TryParse(display.ReadLine(), out int placeNumber))
+                    {
+                        MakeMove(cardNumber, placeNumber);
+                    }
+                }
+            }
         }
 
         Random random = new Random();

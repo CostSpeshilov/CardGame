@@ -1,4 +1,4 @@
-﻿namespace CardGame
+﻿namespace CardGame.GameLogic
 {
     public enum CardType
     {

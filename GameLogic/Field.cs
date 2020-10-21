@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CardGame
+namespace CardGame.GameLogic
 {
     class Field
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CardGame
+namespace CardGame.GameLogic
 {
-    class Card
+    public class Card
     {
         public CardType Type { get; set; }
         public virtual string Name { get; set; }
